@@ -176,7 +176,7 @@
                  <div class="bg-white p-6 rounded-xl solid-shadow flex items-start space-x-4">
                     <span class="flex-shrink-0 w-3 h-3 bg-blue-500 rounded-full mt-1.5"></span>
                     <div>
-                        <p class="font-bold text-lg text-slate-800">Jadwal Simulasi SKD Kedinasan: 19 Juli 2025</p>
+                        <p class="font-bold text-lg text-slate-800">Jadwal Simulasi SKD Kedinasan: 15 Juli 2025</p>
                         <p class="mt-2 text-slate-600">Persiapkan dirimu! Simulasi Akbar SKD Kedinasan akan dibuka serentak. Jangan sampai ketinggalan!</p>
                     </div>
                 </div>
@@ -228,12 +228,15 @@
                 <div class="mt-8 bg-red-50 border border-red-200 p-6 rounded-xl">
                     <h3 class="text-xl font-bold text-red-800">Zona Berbahaya</h3>
                     <p class="text-red-700 mt-2">Tindakan berikut tidak dapat dibatalkan. Lanjutkan dengan hati-hati.</p>
-                    <div class="mt-4 flex flex-col sm:flex-row gap-4">
-                        <button id="clear-history-button" class="w-full bg-red-200 text-red-800 font-bold py-2 px-4 rounded-lg hover:bg-red-300 transition-colors">
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button id="delete-photo-button" class="bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 transition-colors">
+                            Hapus Foto Profil
+                        </button>
+                        <button id="clear-history-button" class="bg-red-200 text-red-800 font-bold py-2 px-4 rounded-lg hover:bg-red-300 transition-colors">
                             Hapus Riwayat Skor
                         </button>
-                        <button id="reset-account-button" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                            Reset Akun
+                        <button id="reset-account-button" class="lg:col-span-1 sm:col-span-2 bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                            Reset Seluruh Akun
                         </button>
                     </div>
                 </div>
@@ -256,6 +259,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let loggedInUser = {};
+            const USER_DB_KEY = 'eduNavUserDatabase';
 
             const redirectToLogin = () => window.location.href = './index.html';
             
@@ -269,6 +273,7 @@
             const ctaSimulasi = document.getElementById('cta-simulasi');
             const editPhotoButton = document.getElementById('edit-photo-button');
             const avatarUploadInput = document.getElementById('avatar-upload-input');
+            const deletePhotoButton = document.getElementById('delete-photo-button');
             const clearHistoryButton = document.getElementById('clear-history-button');
             const resetAccountButton = document.getElementById('reset-account-button');
             const actionConfirmModal = document.getElementById('action-confirm-modal');
@@ -283,7 +288,8 @@
             // --- Fungsi untuk memperbarui semua data pengguna di UI ---
             const updateAllUserData = (user) => {
                 if (!user) return;
-                const userAvatar = user.avatar || `https://placehold.co/96x96/e0e7ff/4f46e5?text=${user.username.charAt(0).toUpperCase()}`;
+                const defaultAvatar = `https://placehold.co/96x96/e0e7ff/4f46e5?text=${user.username.charAt(0).toUpperCase()}`;
+                const userAvatar = user.avatar || defaultAvatar;
                 const userStats = user.stats || { simulasi: 0, rataRata: 0, peringkat: "N/A" };
                 
                 document.getElementById('header-avatar').src = userAvatar;
@@ -333,6 +339,23 @@
                 actionConfirmModal.classList.remove('hidden');
             };
 
+            // --- Fungsi untuk menyimpan data pengguna ke kedua localStorage ---
+            const saveUserAll = (userObject) => {
+                // Simpan ke sesi login saat ini
+                localStorage.setItem('loggedInUser', JSON.stringify(userObject));
+                
+                // Simpan ke "database" permanen
+                let userDb = JSON.parse(localStorage.getItem(USER_DB_KEY) || '{}');
+                if (userDb[userObject.username]) {
+                    userDb[userObject.username].profile = {
+                        avatar: userObject.avatar,
+                        stats: userObject.stats,
+                        history: userObject.history
+                    };
+                    localStorage.setItem(USER_DB_KEY, JSON.stringify(userDb));
+                }
+            };
+
             // --- Event Listener untuk Navigasi ---
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -353,9 +376,7 @@
             
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                showConfirmationModal(
-                    'Konfirmasi Logout',
-                    'Apakah Anda yakin ingin keluar dari sesi ini?',
+                showConfirmationModal('Konfirmasi Logout', 'Apakah Anda yakin ingin keluar dari sesi ini?', 
                     () => {
                         localStorage.removeItem('loggedInUser');
                         redirectToLogin();
@@ -364,13 +385,11 @@
             });
 
             clearHistoryButton.addEventListener('click', () => {
-                showConfirmationModal(
-                    'Hapus Riwayat Skor',
-                    'Semua riwayat skor simulasi Anda akan dihapus permanen. Statistik akan di-reset. Anda yakin?',
+                showConfirmationModal('Hapus Riwayat Skor', 'Semua riwayat skor simulasi Anda akan dihapus permanen. Statistik akan di-reset. Anda yakin?',
                     () => {
                         loggedInUser.history = [];
                         loggedInUser.stats = { simulasi: 0, rataRata: 0, peringkat: "N/A" };
-                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                        saveUserAll(loggedInUser);
                         updateAllUserData(loggedInUser);
                         actionConfirmModal.classList.add('hidden');
                     }
@@ -378,16 +397,15 @@
             });
 
             resetAccountButton.addEventListener('click', () => {
-                showConfirmationModal(
-                    'Reset Akun',
-                    'PERINGATAN: Seluruh data akun Anda di browser ini, termasuk info login, skor, dan foto profil akan dihapus total. Anda harus sign up ulang. Tindakan ini tidak bisa dibatalkan.',
+                showConfirmationModal('Reset Seluruh Akun', 'PERINGATAN: Seluruh data akun Anda di browser ini akan dihapus total. Anda harus sign up ulang. Tindakan ini tidak bisa dibatalkan.',
                     () => {
-                        // Dalam demo, kita hapus semua data relevan
                         const username = loggedInUser.username;
-                        let userDb = JSON.parse(localStorage.getItem('eduNavUserDatabase') || '{}');
-                        delete userDb[username];
+                        let userDb = JSON.parse(localStorage.getItem(USER_DB_KEY) || '{}');
+                        if (userDb[username]) {
+                            delete userDb[username];
+                        }
                         
-                        localStorage.setItem('eduNavUserDatabase', JSON.stringify(userDb));
+                        localStorage.setItem(USER_DB_KEY, JSON.stringify(userDb));
                         localStorage.removeItem('loggedInUser');
                         localStorage.removeItem('eduNavAccountCreated'); 
                         redirectToLogin();
@@ -395,6 +413,17 @@
                 );
             });
             
+            deletePhotoButton.addEventListener('click', () => {
+                showConfirmationModal('Hapus Foto Profil', 'Foto profil Anda akan dikembalikan ke avatar default. Anda yakin?',
+                    () => {
+                        loggedInUser.avatar = `https://placehold.co/96x96/e0e7ff/4f46e5?text=${loggedInUser.username.charAt(0).toUpperCase()}`;
+                        saveUserAll(loggedInUser);
+                        updateAllUserData(loggedInUser);
+                        actionConfirmModal.classList.add('hidden');
+                    }
+                );
+            });
+
             // --- Event Listener untuk Modal ---
             cancelActionBtn.addEventListener('click', () => {
                 actionConfirmModal.classList.add('hidden');
@@ -405,7 +434,6 @@
                     currentConfirmAction();
                 }
             });
-
 
             window.addEventListener('click', (e) => {
                 if (!profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
@@ -425,13 +453,12 @@
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const newAvatarSrc = e.target.result;
-                    loggedInUser.avatar = newAvatarSrc; // Perbarui objek user
-                    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser)); // Simpan ke localStorage
-                    updateAllUserData(loggedInUser); // Perbarui seluruh UI
+                    loggedInUser.avatar = newAvatarSrc;
+                    saveUserAll(loggedInUser); // Simpan ke sesi dan database
+                    updateAllUserData(loggedInUser);
                 };
                 reader.readAsDataURL(file);
             });
-
 
             // --- Inisialisasi Halaman ---
             loadAndDisplayUserData();
