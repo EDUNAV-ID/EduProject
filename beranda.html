@@ -71,9 +71,21 @@
                             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span>Profil Saya</span>
                         </a>
+                        <a href="#" data-target="beranda-content" class="nav-link flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            <span>Beranda</span>
+                        </a>
+                        <a href="#" data-target="simulasi-content" class="nav-link flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">
+                             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span>Simulasi Tes</span>
+                        </a>
                         <a href="./materipage.html" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">
                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             <span>Materi Belajar</span>
+                        </a>
+                         <a href="#" data-target="pengumuman-content" class="nav-link flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">
+                             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584M5.436 13.683L5 15c-1.282 3.68-4 6-4 6h14.528c1.453-1.657 1.453-4.130 0-5.787a4.996 4.996 0 00-4.528-2.213H7"></path></svg>
+                            <span>Pengumuman</span>
                         </a>
                     </div>
                     <div class="py-1 border-t border-slate-100">
@@ -90,252 +102,14 @@
     <main class="container mx-auto px-6 py-8">
 
         <div id="beranda-content" class="content-section">
-            <div class="bg-white p-8 md:p-12 rounded-2xl solid-shadow-lg grid md:grid-cols-2 gap-8 items-center">
-                <div class="text-left">
-                    <h1 id="welcome-message" class="text-3xl md:text-4xl font-extrabold text-slate-900"></h1>
-                    <p class="mt-4 text-lg text-slate-600 max-w-xl">EduNav adalah partner setiamu untuk menaklukkan ujian. Latihan, analisis, dan raih kampus impianmu di sini.</p>
-                    <button id="cta-simulasi" class="mt-6 bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-all shadow-lg hover:shadow-xl">
-                        Mulai Simulasi Sekarang
-                    </button>
-                </div>
-                <div class="hidden md:flex items-center justify-center p-4">
-                     <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#EEF2FF"/><path d="M100 20C144.183 20 180 55.8172 180 100C180 144.183 144.183 180 100 180C55.8172 180 20 144.183 20 100" stroke="#C7D2FE" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 12"/><path d="M85 125L125 85" stroke="#6366F1" stroke-width="8" stroke-linecap="round"/><path d="M75 85H125" stroke="#6366F1" stroke-width="8" stroke-linecap="round"/><path d="M75 105H105" stroke="#A5B4FC" stroke-width="8" stroke-linecap="round"/><path d="M140 100V140H60V60H100" stroke="#4F46E5" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M140 60L100 100" stroke="#4F46E5" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-            </div>
-        </div>
-
-        <div id="simulasi-content" class="content-section">
-            <h1 class="text-3xl font-extrabold text-slate-900 text-center mb-2">Pilih Simulasi Tes</h1>
-            <p class="text-slate-600 text-center mb-10">Asah kemampuanmu pada bidang yang kamu tuju.</p>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <a href="./utbk.html" class="group block bg-white p-8 rounded-xl solid-shadow card-hover border-2 border-transparent hover:border-indigo-500">
-                    <h2 class="text-2xl font-bold text-indigo-700">Try Out UTBK</h2>
-                    <p class="mt-2 text-slate-600">Raih PTN impianmu dengan persiapan matang.</p>
-                    <span class="mt-4 inline-block font-semibold text-indigo-600 group-hover:underline">Mulai Mengerjakan &rarr;</span>
-                </a>
-                <a href="./SKD.html" class="group block bg-white p-8 rounded-xl solid-shadow card-hover border-2 border-transparent hover:border-blue-500">
-                    <h2 class="text-2xl font-bold text-blue-700">SKD Kedinasan</h2>
-                    <p class="mt-2 text-slate-600">Jadilah abdi negara selanjutnya.</p>
-                    <span class="mt-4 inline-block font-semibold text-blue-600 group-hover:underline">Mulai Mengerjakan &rarr;</span>
-                </a>
-            </div>
-        </div>
-
-        <div id="pengumuman-content" class="content-section">
-            <h1 class="text-3xl font-extrabold text-slate-900 text-center mb-10">Papan Pengumuman</h1>
-            <div class="max-w-3xl mx-auto space-y-6">
-                 <div class="bg-white p-6 rounded-xl solid-shadow flex items-start space-x-4">
-                    <span class="flex-shrink-0 w-3 h-3 bg-blue-500 rounded-full mt-1.5"></span>
-                    <div>
-                        <p class="font-bold text-lg text-slate-800">Jadwal Simulasi SKD Kedinasan: Selalu Tersedia</p>
-                        <p class="mt-2 text-slate-600">Persiapkan dirimu! Simulasi Akbar SKD Kedinasan dapat diakses kapan saja untuk latihan mandiri.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="profil-content" class="content-section">
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-2xl solid-shadow-lg p-8 text-center relative">
-                    <img id="profile-avatar-main" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-200 object-cover cursor-pointer hover:opacity-80 transition-opacity" src="">
-                    <h1 id="profile-name-main" class="text-3xl font-bold text-slate-900"></h1>
-                    <p id="profile-email-main" class="text-slate-500 mt-1"></p>
-                    <button id="edit-avatar-button" class="absolute top-4 right-4 text-sm bg-slate-100 text-slate-600 font-semibold py-1 px-3 rounded-lg hover:bg-slate-200">
-                        Edit Gambar
-                    </button>
-                </div>
+            <div class="bg-white p-8 md:p-12 rounded-2xl solid-shadow-lg text-center">
+                <h1 id="welcome-message" class="text-3xl md:text-4xl font-extrabold text-slate-900"></h1>
+                <p class="mt-2 text-lg text-slate-600 max-w-2xl mx-auto">Platform persiapan tes CPNS & PTN terlengkap untuk membantumu meraih impian.</p>
                 
-                <div class="mt-8 grid md:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl solid-shadow p-6 text-center">
-                        <p class="text-sm text-slate-500">Simulasi Dikerjakan</p>
-                        <p id="stat-simulasi" class="text-3xl font-bold text-indigo-600 mt-1">0</p>
-                    </div>
-                    <div class="bg-white rounded-xl solid-shadow p-6 text-center">
-                        <p class="text-sm text-slate-500">Rata-rata Skor</p>
-                        <p id="stat-rata-rata" class="text-3xl font-bold text-green-600 mt-1">0</p>
-                    </div>
-                    <div class="bg-white rounded-xl solid-shadow p-6 text-center">
-                        <p class="text-sm text-slate-500">Peringkat (Umum)</p>
-                        <a href="./ldr.html" id="stat-peringkat" class="text-3xl font-bold text-amber-600 mt-1 hover:underline">N/A</a>
-                    </div>
-                </div>
-                
-                <div class="mt-8 text-center">
-                    <a href="./skor.html" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg inline-block">
-                        Lihat Riwayat Skor Lengkap
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div id="logout-confirm-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
-            <h3 class="text-lg font-bold text-slate-900">Konfirmasi Logout</h3>
-            <p class="mt-2 text-sm text-slate-600">Apakah Anda yakin ingin keluar dari sesi ini?</p>
-            <div class="mt-6 flex justify-center gap-4">
-                <button id="cancel-logout-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
-                <button id="confirm-logout-btn" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Ya, Logout</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="edit-avatar-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50 p-4">
-        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full text-left">
-            <h3 class="text-lg font-bold text-slate-900 mb-4">Ganti Gambar Profil</h3>
-            <form id="edit-avatar-form">
-                <div>
-                    <label for="new-avatar-url" class="block text-sm font-medium text-slate-700">URL Gambar Baru</label>
-                    <input type="url" id="new-avatar-url" placeholder="https://example.com/image.png" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" required>
-                    <p class="text-xs text-slate-500 mt-1">Masukkan URL gambar yang valid (diakhiri .jpg, .png, .gif, dll).</p>
-                </div>
-                <div class="mt-6 flex justify-end gap-4">
-                    <button type="button" id="cancel-avatar-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
-                    <button type="submit" id="save-avatar-btn" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let loggedInUser = {};
-
-            const redirectToLogin = () => window.location.href = './index.html';
-            
-            // Elemen UI Utama
-            const profileButton = document.getElementById('profile-button');
-            const profileDropdown = document.getElementById('profile-dropdown');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const contentSections = document.querySelectorAll('.content-section');
-            const logoLink = document.getElementById('logo-link');
-            const ctaSimulasi = document.getElementById('cta-simulasi');
-
-            // Elemen Logout
-            const logoutButton = document.getElementById('logout-button');
-            const logoutConfirmModal = document.getElementById('logout-confirm-modal');
-            const cancelLogoutBtn = document.getElementById('cancel-logout-btn');
-            const confirmLogoutBtn = document.getElementById('confirm-logout-btn');
-
-            // [BARU] Elemen Edit Avatar
-            const editAvatarModal = document.getElementById('edit-avatar-modal');
-            const profileAvatarMain = document.getElementById('profile-avatar-main');
-            const editAvatarButton = document.getElementById('edit-avatar-button');
-            const editAvatarForm = document.getElementById('edit-avatar-form');
-            const cancelAvatarBtn = document.getElementById('cancel-avatar-btn');
-            const newAvatarUrlInput = document.getElementById('new-avatar-url');
-
-            const updateAllUserData = (user) => {
-                if (!user) return;
-                const userAvatar = user.avatar || `https://placehold.co/96x96/e0e7ff/4f46e5?text=${user.username.charAt(0).toUpperCase()}`;
-                const userStats = user.stats || { simulasi: 0, rataRata: 0, peringkat: "N/A" };
-                
-                // Update semua gambar profil
-                document.getElementById('header-avatar').src = userAvatar;
-                document.getElementById('profile-avatar-main').src = userAvatar;
-
-                // Update teks
-                document.getElementById('profile-username').textContent = user.username;
-                document.getElementById('dropdown-username').textContent = user.username;
-                document.getElementById('dropdown-email').textContent = user.email;
-                document.getElementById('welcome-message').textContent = `Halo, ${user.username}!`;
-                document.getElementById('profile-name-main').textContent = user.username;
-                document.getElementById('profile-email-main').textContent = user.email;
-                document.getElementById('stat-simulasi').textContent = userStats.simulasi;
-                document.getElementById('stat-rata-rata').textContent = userStats.rataRata;
-                document.getElementById('stat-peringkat').textContent = userStats.peringkat;
-            };
-
-            const loadAndDisplayUserData = () => {
-                const userString = localStorage.getItem('loggedInUser');
-                if (userString) {
-                    loggedInUser = JSON.parse(userString);
-                    if (!loggedInUser.stats) loggedInUser.stats = { simulasi: 0, rataRata: 0, peringkat: "N/A" };
-                    if (!loggedInUser.history) loggedInUser.history = [];
-                    updateAllUserData(loggedInUser);
-                } else {
-                    redirectToLogin();
-                }
-            };
-
-            const switchPage = (targetId) => {
-                contentSections.forEach(section => section.classList.remove('active'));
-                const targetEl = document.getElementById(targetId);
-                if (targetEl) targetEl.classList.add('active');
-                
-                navLinks.forEach(link => {
-                    link.classList.toggle('nav-link-active', link.dataset.target === targetId);
-                });
-                profileDropdown.classList.add('hidden');
-            };
-            
-            // Event Listeners Navigasi
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if(e.currentTarget.dataset.target) switchPage(e.currentTarget.dataset.target);
-                });
-            });
-            logoLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                switchPage('beranda-content');
-            });
-            ctaSimulasi.addEventListener('click', () => switchPage('simulasi-content'));
-
-            // Event Listeners Profil & Logout
-            profileButton.addEventListener('click', () => profileDropdown.classList.toggle('hidden'));
-            logoutButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                logoutConfirmModal.classList.remove('hidden');
-            });
-            cancelLogoutBtn.addEventListener('click', () => logoutConfirmModal.classList.add('hidden'));
-            confirmLogoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('loggedInUser');
-                redirectToLogin();
-            });
-            window.addEventListener('click', (e) => {
-                if (!profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
-                    profileDropdown.classList.add('hidden');
-                }
-            });
-
-            // [BARU] Event Listeners untuk Edit Avatar
-            const openEditModal = () => {
-                newAvatarUrlInput.value = loggedInUser.avatar || '';
-                editAvatarModal.classList.remove('hidden');
-            };
-
-            const closeEditModal = () => {
-                editAvatarModal.classList.add('hidden');
-            };
-
-            profileAvatarMain.addEventListener('click', openEditModal);
-            editAvatarButton.addEventListener('click', openEditModal);
-            
-            cancelAvatarBtn.addEventListener('click', closeEditModal);
-
-            editAvatarForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const newUrl = newAvatarUrlInput.value.trim();
-                if (newUrl) {
-                    loggedInUser.avatar = newUrl;
-                    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-                    updateAllUserData(loggedInUser);
-                    closeEditModal();
-                }
-            });
-
-            // Inisialisasi Halaman
-            loadAndDisplayUserData();
-            const targetSection = sessionStorage.getItem('targetSection');
-            if (targetSection) {
-                switchPage(targetSection);
-                sessionStorage.removeItem('targetSection');
-            } else {
-                switchPage('beranda-content');
-            }
-        });
-    </script>
-</body>
-</html>
+                <div class="mt-10 grid md:grid-cols-3 gap-8 text-left">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate
