@@ -130,7 +130,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center p-6 bg-white rounded-xl solid-shadow card-hover">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mx-auto">
-                           <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01"></path><path d="M7 12h10" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M7 12L7 16" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M17 12L17 16" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M9 8a2 2 0 100-4 2 2 0 000 4z" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path></svg>
+                           <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H7"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4 mb-2">100% Gratis</h3>
                         <p class="text-slate-600">Akses semua simulasi dan materi pembahasan yang tersedia di versi demo ini tanpa biaya apapun.</p>
@@ -383,16 +383,23 @@
                     'PERINGATAN: Seluruh data akun Anda di browser ini, termasuk info login, skor, dan foto profil akan dihapus total. Anda harus sign up ulang. Tindakan ini tidak bisa dibatalkan.',
                     () => {
                         // Dalam demo, kita hapus semua data relevan
+                        const username = loggedInUser.username;
+                        let userDb = JSON.parse(localStorage.getItem('eduNavUserDatabase') || '{}');
+                        delete userDb[username];
+                        
+                        localStorage.setItem('eduNavUserDatabase', JSON.stringify(userDb));
                         localStorage.removeItem('loggedInUser');
-                        localStorage.removeItem('eduNavUserDatabase');
-                        localStorage.removeItem('eduNavAccountCreated');
+                        localStorage.removeItem('eduNavAccountCreated'); 
                         redirectToLogin();
                     }
                 );
             });
             
             // --- Event Listener untuk Modal ---
-            cancelActionBtn.addEventListener('click', () => actionConfirmModal.classList.add('hidden'));
+            cancelActionBtn.addEventListener('click', () => {
+                actionConfirmModal.classList.add('hidden');
+                currentConfirmAction = null;
+            });
             confirmActionBtn.addEventListener('click', () => {
                 if (typeof currentConfirmAction === 'function') {
                     currentConfirmAction();
