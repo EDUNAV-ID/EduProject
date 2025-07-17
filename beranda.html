@@ -127,8 +127,8 @@
                  <div class="bg-white p-6 rounded-xl solid-shadow flex items-start space-x-4">
                     <span class="flex-shrink-0 w-3 h-3 bg-blue-500 rounded-full mt-1.5"></span>
                     <div>
-                        <p class="font-bold text-lg text-slate-800">Jadwal Simulasi SKD Kedinasan: 15 Juli 2025</p>
-                        <p class="mt-2 text-slate-600">Persiapkan dirimu! Simulasi Akbar SKD Kedinasan akan dibuka serentak. Jangan sampai ketinggalan!</p>
+                        <p class="font-bold text-lg text-slate-800">Jadwal Simulasi SKD Kedinasan: Selalu Tersedia</p>
+                        <p class="mt-2 text-slate-600">Persiapkan dirimu! Simulasi Akbar SKD Kedinasan dapat diakses kapan saja untuk latihan mandiri.</p>
                     </div>
                 </div>
             </div>
@@ -136,10 +136,13 @@
         
         <div id="profil-content" class="content-section">
             <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-2xl solid-shadow-lg p-8 text-center">
-                    <img id="profile-avatar-main" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-200 object-cover" src="">
+                <div class="bg-white rounded-2xl solid-shadow-lg p-8 text-center relative">
+                    <img id="profile-avatar-main" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-200 object-cover cursor-pointer hover:opacity-80 transition-opacity" src="">
                     <h1 id="profile-name-main" class="text-3xl font-bold text-slate-900"></h1>
                     <p id="profile-email-main" class="text-slate-500 mt-1"></p>
+                    <button id="edit-avatar-button" class="absolute top-4 right-4 text-sm bg-slate-100 text-slate-600 font-semibold py-1 px-3 rounded-lg hover:bg-slate-200">
+                        Edit Gambar
+                    </button>
                 </div>
                 
                 <div class="mt-8 grid md:grid-cols-3 gap-6">
@@ -153,7 +156,7 @@
                     </div>
                     <div class="bg-white rounded-xl solid-shadow p-6 text-center">
                         <p class="text-sm text-slate-500">Peringkat (Umum)</p>
-                        <p id="stat-peringkat" class="text-3xl font-bold text-amber-600 mt-1">N/A</p>
+                        <a href="./ldr.html" id="stat-peringkat" class="text-3xl font-bold text-amber-600 mt-1 hover:underline">N/A</a>
                     </div>
                 </div>
                 
@@ -177,35 +180,66 @@
         </div>
     </div>
 
+    <div id="edit-avatar-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full text-left">
+            <h3 class="text-lg font-bold text-slate-900 mb-4">Ganti Gambar Profil</h3>
+            <form id="edit-avatar-form">
+                <div>
+                    <label for="new-avatar-url" class="block text-sm font-medium text-slate-700">URL Gambar Baru</label>
+                    <input type="url" id="new-avatar-url" placeholder="https://example.com/image.png" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" required>
+                    <p class="text-xs text-slate-500 mt-1">Masukkan URL gambar yang valid (diakhiri .jpg, .png, .gif, dll).</p>
+                </div>
+                <div class="mt-6 flex justify-end gap-4">
+                    <button type="button" id="cancel-avatar-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
+                    <button type="submit" id="save-avatar-btn" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let loggedInUser = {};
 
-            const redirectToLogin = () => window.location.href = './loginpage.html';
+            const redirectToLogin = () => window.location.href = './index.html';
             
+            // Elemen UI Utama
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
-            const logoutButton = document.getElementById('logout-button');
-            const logoutConfirmModal = document.getElementById('logout-confirm-modal');
-            const cancelLogoutBtn = document.getElementById('cancel-logout-btn');
-            const confirmLogoutBtn = document.getElementById('confirm-logout-btn');
             const navLinks = document.querySelectorAll('.nav-link');
             const contentSections = document.querySelectorAll('.content-section');
             const logoLink = document.getElementById('logo-link');
             const ctaSimulasi = document.getElementById('cta-simulasi');
+
+            // Elemen Logout
+            const logoutButton = document.getElementById('logout-button');
+            const logoutConfirmModal = document.getElementById('logout-confirm-modal');
+            const cancelLogoutBtn = document.getElementById('cancel-logout-btn');
+            const confirmLogoutBtn = document.getElementById('confirm-logout-btn');
+
+            // [BARU] Elemen Edit Avatar
+            const editAvatarModal = document.getElementById('edit-avatar-modal');
+            const profileAvatarMain = document.getElementById('profile-avatar-main');
+            const editAvatarButton = document.getElementById('edit-avatar-button');
+            const editAvatarForm = document.getElementById('edit-avatar-form');
+            const cancelAvatarBtn = document.getElementById('cancel-avatar-btn');
+            const newAvatarUrlInput = document.getElementById('new-avatar-url');
 
             const updateAllUserData = (user) => {
                 if (!user) return;
                 const userAvatar = user.avatar || `https://placehold.co/96x96/e0e7ff/4f46e5?text=${user.username.charAt(0).toUpperCase()}`;
                 const userStats = user.stats || { simulasi: 0, rataRata: 0, peringkat: "N/A" };
                 
+                // Update semua gambar profil
                 document.getElementById('header-avatar').src = userAvatar;
+                document.getElementById('profile-avatar-main').src = userAvatar;
+
+                // Update teks
                 document.getElementById('profile-username').textContent = user.username;
                 document.getElementById('dropdown-username').textContent = user.username;
                 document.getElementById('dropdown-email').textContent = user.email;
                 document.getElementById('welcome-message').textContent = `Halo, ${user.username}!`;
-                
-                document.getElementById('profile-avatar-main').src = userAvatar;
                 document.getElementById('profile-name-main').textContent = user.username;
                 document.getElementById('profile-email-main').textContent = user.email;
                 document.getElementById('stat-simulasi').textContent = userStats.simulasi;
@@ -236,20 +270,20 @@
                 profileDropdown.classList.add('hidden');
             };
             
+            // Event Listeners Navigasi
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     if(e.currentTarget.dataset.target) switchPage(e.currentTarget.dataset.target);
                 });
             });
-            
             logoLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 switchPage('beranda-content');
             });
-
             ctaSimulasi.addEventListener('click', () => switchPage('simulasi-content'));
 
+            // Event Listeners Profil & Logout
             profileButton.addEventListener('click', () => profileDropdown.classList.toggle('hidden'));
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -260,15 +294,47 @@
                 localStorage.removeItem('loggedInUser');
                 redirectToLogin();
             });
-
             window.addEventListener('click', (e) => {
                 if (!profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
                     profileDropdown.classList.add('hidden');
                 }
             });
 
+            // [BARU] Event Listeners untuk Edit Avatar
+            const openEditModal = () => {
+                newAvatarUrlInput.value = loggedInUser.avatar || '';
+                editAvatarModal.classList.remove('hidden');
+            };
+
+            const closeEditModal = () => {
+                editAvatarModal.classList.add('hidden');
+            };
+
+            profileAvatarMain.addEventListener('click', openEditModal);
+            editAvatarButton.addEventListener('click', openEditModal);
+            
+            cancelAvatarBtn.addEventListener('click', closeEditModal);
+
+            editAvatarForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newUrl = newAvatarUrlInput.value.trim();
+                if (newUrl) {
+                    loggedInUser.avatar = newUrl;
+                    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                    updateAllUserData(loggedInUser);
+                    closeEditModal();
+                }
+            });
+
+            // Inisialisasi Halaman
             loadAndDisplayUserData();
-            switchPage('beranda-content');
+            const targetSection = sessionStorage.getItem('targetSection');
+            if (targetSection) {
+                switchPage(targetSection);
+                sessionStorage.removeItem('targetSection');
+            } else {
+                switchPage('beranda-content');
+            }
         });
     </script>
 </body>
