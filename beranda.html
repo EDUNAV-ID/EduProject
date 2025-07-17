@@ -190,7 +190,13 @@
         <div id="profil-content" class="content-section">
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white rounded-2xl solid-shadow-lg p-8 text-center">
-                    <img id="profile-avatar-main" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-200 object-cover" src="">
+                    <div class="relative w-24 h-24 mx-auto mb-4">
+                        <img id="profile-avatar-main" class="w-24 h-24 rounded-full border-4 border-indigo-200 object-cover" src="">
+                        <button id="edit-photo-button" class="absolute bottom-0 right-0 bg-slate-700 hover:bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white transition-transform hover:scale-110" title="Ubah foto profil">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"></path></svg>
+                        </button>
+                        <input type="file" id="avatar-upload-input" class="hidden" accept="image/png, image/jpeg, image/gif">
+                    </div>
                     <h1 id="profile-name-main" class="text-3xl font-bold text-slate-900"></h1>
                     <p id="profile-email-main" class="text-slate-500 mt-1"></p>
                 </div>
@@ -211,7 +217,7 @@
                 </div>
                 
                 <div class="mt-8 text-center">
-                    <a href="./skor.html" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg inline-block">
+                    <a href="./riwayatskor.html" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg inline-block">
                         Lihat Riwayat Skor Lengkap
                     </a>
                 </div>
@@ -236,6 +242,7 @@
 
             const redirectToLogin = () => window.location.href = './index.html';
             
+            // --- Selektor Elemen DOM ---
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
             const logoutButton = document.getElementById('logout-button');
@@ -246,7 +253,10 @@
             const contentSections = document.querySelectorAll('.content-section');
             const logoLink = document.getElementById('logo-link');
             const ctaSimulasi = document.getElementById('cta-simulasi');
+            const editPhotoButton = document.getElementById('edit-photo-button');
+            const avatarUploadInput = document.getElementById('avatar-upload-input');
 
+            // --- Fungsi untuk memperbarui semua data pengguna di UI ---
             const updateAllUserData = (user) => {
                 if (!user) return;
                 const userAvatar = user.avatar || `https://placehold.co/96x96/e0e7ff/4f46e5?text=${user.username.charAt(0).toUpperCase()}`;
@@ -266,6 +276,7 @@
                 document.getElementById('stat-peringkat').textContent = userStats.peringkat;
             };
 
+            // --- Memuat dan menampilkan data pengguna dari localStorage ---
             const loadAndDisplayUserData = () => {
                 const userString = localStorage.getItem('loggedInUser');
                 if (userString) {
@@ -278,6 +289,7 @@
                 }
             };
 
+            // --- Fungsi untuk berpindah antar 'halaman' atau section ---
             const switchPage = (targetId) => {
                 contentSections.forEach(section => section.classList.remove('active'));
                 const targetEl = document.getElementById(targetId);
@@ -289,6 +301,7 @@
                 profileDropdown.classList.add('hidden');
             };
             
+            // --- Event Listener untuk Navigasi ---
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -303,6 +316,7 @@
 
             ctaSimulasi.addEventListener('click', () => switchPage('simulasi-content'));
 
+            // --- Event Listener untuk Profil & Logout ---
             profileButton.addEventListener('click', () => profileDropdown.classList.toggle('hidden'));
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -320,6 +334,27 @@
                 }
             });
 
+            // --- Event Listener untuk Edit Foto Profil ---
+            editPhotoButton.addEventListener('click', () => {
+                avatarUploadInput.click();
+            });
+
+            avatarUploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const newAvatarSrc = e.target.result;
+                    loggedInUser.avatar = newAvatarSrc; // Perbarui objek user
+                    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser)); // Simpan ke localStorage
+                    updateAllUserData(loggedInUser); // Perbarui seluruh UI
+                };
+                reader.readAsDataURL(file);
+            });
+
+
+            // --- Inisialisasi Halaman ---
             loadAndDisplayUserData();
             
             const targetSection = sessionStorage.getItem('targetSection');
