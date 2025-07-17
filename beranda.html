@@ -41,6 +41,9 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
+        .modal-container {
+            animation: fadeIn 0.4s ease-in-out;
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -127,7 +130,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center p-6 bg-white rounded-xl solid-shadow card-hover">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mx-auto">
-                           <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 6v-1h4v1h-4zm-2 10v-1h-4v1h4zm-4 2v-1h-2v1h2zm-2 2v-1h-2v1h2zm10 2v-1h4v1h-4z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18V6M6 12H5a2 2 0 00-2 2v2a2 2 0 002 2h1a2 2 0 002-2v-2a2 2 0 00-2-2zM18 12h-1a2 2 0 00-2 2v2a2 2 0 002 2h1a2 2 0 002-2v-2a2 2 0 00-2-2z"></path></svg>
+                           <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01"></path><path d="M7 12h10" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M7 12L7 16" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M17 12L17 16" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path><path d="M9 8a2 2 0 100-4 2 2 0 000 4z" stroke="#16a34a" stroke-width="2" stroke-linecap="round"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4 mb-2">100% Gratis</h3>
                         <p class="text-slate-600">Akses semua simulasi dan materi pembahasan yang tersedia di versi demo ini tanpa biaya apapun.</p>
@@ -216,25 +219,39 @@
                     </div>
                 </div>
                 
-                <div class="mt-8 text-center">
+                <div class="mt-8 text-center border-t pt-8 border-slate-200">
                     <a href="./riwayatskor.html" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg inline-block">
                         Lihat Riwayat Skor Lengkap
                     </a>
+                </div>
+
+                <div class="mt-8 bg-red-50 border border-red-200 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-red-800">Zona Berbahaya</h3>
+                    <p class="text-red-700 mt-2">Tindakan berikut tidak dapat dibatalkan. Lanjutkan dengan hati-hati.</p>
+                    <div class="mt-4 flex flex-col sm:flex-row gap-4">
+                        <button id="clear-history-button" class="w-full bg-red-200 text-red-800 font-bold py-2 px-4 rounded-lg hover:bg-red-300 transition-colors">
+                            Hapus Riwayat Skor
+                        </button>
+                        <button id="reset-account-button" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                            Reset Akun
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <div id="logout-confirm-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
-            <h3 class="text-lg font-bold text-slate-900">Konfirmasi Logout</h3>
-            <p class="mt-2 text-sm text-slate-600">Apakah Anda yakin ingin keluar dari sesi ini?</p>
+    <div id="action-confirm-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center modal-container">
+            <h3 id="confirm-title" class="text-lg font-bold text-slate-900">Konfirmasi Tindakan</h3>
+            <p id="confirm-message" class="mt-2 text-sm text-slate-600">Apakah Anda yakin?</p>
             <div class="mt-6 flex justify-center gap-4">
-                <button id="cancel-logout-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
-                <button id="confirm-logout-btn" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Ya, Logout</button>
+                <button id="cancel-action-btn" class="px-6 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
+                <button id="confirm-action-btn" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -246,15 +263,22 @@
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
             const logoutButton = document.getElementById('logout-button');
-            const logoutConfirmModal = document.getElementById('logout-confirm-modal');
-            const cancelLogoutBtn = document.getElementById('cancel-logout-btn');
-            const confirmLogoutBtn = document.getElementById('confirm-logout-btn');
             const navLinks = document.querySelectorAll('.nav-link');
             const contentSections = document.querySelectorAll('.content-section');
             const logoLink = document.getElementById('logo-link');
             const ctaSimulasi = document.getElementById('cta-simulasi');
             const editPhotoButton = document.getElementById('edit-photo-button');
             const avatarUploadInput = document.getElementById('avatar-upload-input');
+            const clearHistoryButton = document.getElementById('clear-history-button');
+            const resetAccountButton = document.getElementById('reset-account-button');
+            const actionConfirmModal = document.getElementById('action-confirm-modal');
+            const cancelActionBtn = document.getElementById('cancel-action-btn');
+            const confirmActionBtn = document.getElementById('confirm-action-btn');
+            const confirmTitle = document.getElementById('confirm-title');
+            const confirmMessage = document.getElementById('confirm-message');
+            
+            // --- Logika untuk menampung fungsi konfirmasi ---
+            let currentConfirmAction = null;
 
             // --- Fungsi untuk memperbarui semua data pengguna di UI ---
             const updateAllUserData = (user) => {
@@ -301,6 +325,14 @@
                 profileDropdown.classList.add('hidden');
             };
             
+            // --- Fungsi untuk menampilkan Modal Konfirmasi ---
+            const showConfirmationModal = (title, message, onConfirm) => {
+                confirmTitle.textContent = title;
+                confirmMessage.textContent = message;
+                currentConfirmAction = onConfirm;
+                actionConfirmModal.classList.remove('hidden');
+            };
+
             // --- Event Listener untuk Navigasi ---
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -316,17 +348,57 @@
 
             ctaSimulasi.addEventListener('click', () => switchPage('simulasi-content'));
 
-            // --- Event Listener untuk Profil & Logout ---
+            // --- Event Listener untuk Profil & Tindakan Berbahaya ---
             profileButton.addEventListener('click', () => profileDropdown.classList.toggle('hidden'));
+            
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                logoutConfirmModal.classList.remove('hidden');
+                showConfirmationModal(
+                    'Konfirmasi Logout',
+                    'Apakah Anda yakin ingin keluar dari sesi ini?',
+                    () => {
+                        localStorage.removeItem('loggedInUser');
+                        redirectToLogin();
+                    }
+                );
             });
-            cancelLogoutBtn.addEventListener('click', () => logoutConfirmModal.classList.add('hidden'));
-            confirmLogoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('loggedInUser');
-                redirectToLogin();
+
+            clearHistoryButton.addEventListener('click', () => {
+                showConfirmationModal(
+                    'Hapus Riwayat Skor',
+                    'Semua riwayat skor simulasi Anda akan dihapus permanen. Statistik akan di-reset. Anda yakin?',
+                    () => {
+                        loggedInUser.history = [];
+                        loggedInUser.stats = { simulasi: 0, rataRata: 0, peringkat: "N/A" };
+                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                        updateAllUserData(loggedInUser);
+                        actionConfirmModal.classList.add('hidden');
+                    }
+                );
             });
+
+            resetAccountButton.addEventListener('click', () => {
+                showConfirmationModal(
+                    'Reset Akun',
+                    'PERINGATAN: Seluruh data akun Anda di browser ini, termasuk info login, skor, dan foto profil akan dihapus total. Anda harus sign up ulang. Tindakan ini tidak bisa dibatalkan.',
+                    () => {
+                        // Dalam demo, kita hapus semua data relevan
+                        localStorage.removeItem('loggedInUser');
+                        localStorage.removeItem('eduNavUserDatabase');
+                        localStorage.removeItem('eduNavAccountCreated');
+                        redirectToLogin();
+                    }
+                );
+            });
+            
+            // --- Event Listener untuk Modal ---
+            cancelActionBtn.addEventListener('click', () => actionConfirmModal.classList.add('hidden'));
+            confirmActionBtn.addEventListener('click', () => {
+                if (typeof currentConfirmAction === 'function') {
+                    currentConfirmAction();
+                }
+            });
+
 
             window.addEventListener('click', (e) => {
                 if (!profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
