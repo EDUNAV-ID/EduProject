@@ -46,7 +46,7 @@
             <p class="mt-4 text-slate-600">Anda akan memulai simulasi dengan detail sebagai berikut:</p>
             <div class="mt-6 text-left bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-3">
                 <div class="flex justify-between"><span class="font-semibold text-slate-700">Jumlah Soal</span><span class="font-bold text-indigo-600">110 Soal</span></div>
-                <div class="flex justify-between"><span class="font-semibold text-slate-700">Waktu Pengerjaan</span><span class="font-bold text-indigo-600">130 Menit</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-slate-700">Waktu Pengerjaan</span><span class="font-bold text-indigo-600">100 Menit</span></div>
                 <div class="flex justify-between"><span class="font-semibold text-slate-700">Sistem Penilaian</span><span class="font-bold text-indigo-600">Sesuai Aturan CAT</span></div>
             </div>
             <p class="mt-6 text-sm text-slate-500">Pastikan Anda berada di tempat yang kondusif. Waktu akan berjalan setelah Anda menekan tombol 'Mulai'. Ujian yang sedang berlangsung dapat dilanjutkan kembali jika Anda menutup halaman ini.</p>
@@ -61,7 +61,7 @@
         <div class="bg-white shadow-xl rounded-2xl">
             <div class="p-4 border-b border-gray-200 flex justify-between items-center sticky top-[65px] bg-white z-10 rounded-t-2xl">
                 <h2 id="test-title" class="text-xl font-bold text-gray-800">SKD Kedinasan</h2>
-                <div class="text-lg font-semibold bg-red-100 text-red-700 px-4 py-1 rounded-md"><span id="timer">130:00</span></div>
+                <div class="text-lg font-semibold bg-red-100 text-red-700 px-4 py-1 rounded-md"><span id="timer">100:00</span></div>
             </div>
             <div class="p-6">
                 <p class="text-lg font-semibold text-gray-800 mb-2">Soal No. <span id="question-number"></span> (<span id="question-category"></span>)</p>
@@ -248,7 +248,7 @@
         let userAnswers = {};
         let timerInterval;
         let examEndTime = 0;
-        const TEST_DURATION_SECONDS = 130 * 60;
+        const TEST_DURATION_SECONDS = 100 * 60;
         const EXAM_STATE_KEY = 'skdExamState';
 
         // --- Elemen DOM ---
